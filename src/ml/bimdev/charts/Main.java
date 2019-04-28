@@ -25,9 +25,12 @@ public class Main {
         for(Integer[] dataset : input) {
             SplayTree<Integer, Void> tree = new SplayTree<>();
             int insertTime = bench(dataset, key -> tree.insert(key, null));
+            int size = tree.size();
             int searchTime = bench(dataset, key -> tree.search(key));
-            int removeTime = bench(dataset, key -> tree.remove(key));
-            print(dataset.length, insertTime, searchTime, removeTime);
+            SplayTree<Integer, Void> removeTree = new SplayTree<>();
+            bench(dataset, key -> removeTree.insert(key, null));
+            int removeTime = bench(dataset, key -> removeTree.remove(key));
+            print(size, insertTime, searchTime, removeTime);
         }
         printWriter.flush();
         printWriter.close();

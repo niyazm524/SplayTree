@@ -1,7 +1,6 @@
 package ml.bimdev.generators;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Random;
 
 public class InputGenerator {
@@ -11,17 +10,20 @@ public class InputGenerator {
 
     private static void createData(String filename, int amount, int step) {
         Random random = new Random();
-        StringBuilder text = new StringBuilder();
 
-        try (FileWriter writer = new FileWriter(filename, false)) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             for (int i = 1; i <= amount; i++) {
-                for (int j = 0; j < i * step; j++) {
-                    text.append(random.nextInt(1000)).append(" ");
-                }
-                writer.write(text.toString());
+                    random.ints(1, 10000)
+                            .distinct()
+                            .limit(i*step)
+                            .forEach(num -> {
+                                try {
+                                    writer.append(Integer.toString(num)).append(" ");
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            });
                 writer.append('\n');
-                text = new StringBuilder();
-
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
