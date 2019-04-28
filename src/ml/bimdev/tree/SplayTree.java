@@ -1,12 +1,12 @@
-package ml.bimdev;
+package ml.bimdev.tree;
 
 public class SplayTree<K extends Comparable<K>, V> {
 
     private Node rootNode;   
 
    
-    public boolean exists(K chave) {
-        return (search(chave) != null);
+    public boolean exists(K key) {
+        return (search(key) != null);
     }
 
   
@@ -149,7 +149,7 @@ public class SplayTree<K extends Comparable<K>, V> {
             n.leftNode = rootNode;
             rootNode.rightNode = null;
             rootNode = n;
-        } else if (cmp == 0) {
+        } else {
             
             rootNode.value = value;
         }
